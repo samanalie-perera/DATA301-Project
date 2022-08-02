@@ -1,0 +1,64 @@
+---
+title: "data301_Project"
+author: "Samanalie Perera"
+date: "2022-08-01"
+output: html_document
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(RNHANES)
+library(foreign)
+
+
+data2009 <- nhanes_load_data("DPQ_F", "2009-2010")
+
+data2011 <- nhanes_load_data("DPQ_G", "2011-2012")
+
+data2013 <- nhanes_load_data("DPQ_H", "2013-2014")
+
+download.file("https://wwwn.cdc.gov/nchs/nhanes/2015-2016/DPQ_I.xpt", 
+              temp <- tempfile(), 
+              mode="wb")
+
+data2015 <- foreign::read.xport(temp)
+data2015$file_name <- c("DPQ_I")
+data2015$cycle <- c("2015-2016")
+data2015$begin_year <- c(2015)
+data2015$begin_year <- as.double(data2015$begin_year)
+
+data2015$end_year <- c(2016)
+data2015$end_year <- as.double(data2015$end_year)
+
+data2015 <- subset(data2015, select = -c(Year))
+data2015
+
+
+
+download.file("https://wwwn.cdc.gov/nchs/nhanes/2017-2018/DPQ_J.xpt", 
+              tf <- tempfile(), 
+              mode="wb")
+
+data2017 <- foreign::read.xport(tf)
+data2017$file_name <- c("DPQ_J")
+data2017$cycle <- c("2017-2018")
+data2017$begin_year <- c(2017)
+data2017$begin_year <- as.double(data2017$begin_year)
+data2017$end_year <- c(2018)
+data2017$end_year <- as.double(data2017$end_year)
+
+data2017
+
+dataFrom20092011 <- rbind(data2009,data2011)
+dataFrom20092013 <- rbind(dataFrom20092011, data2013)
+dataFrom20152017 <- rbind(data2015, data2017)
+fulldataset <- rbind(dataFrom20092013,dataFrom20152017) 
+fulldataset
+
+
+```
