@@ -5,8 +5,6 @@ date: "2022-08-01"
 output: html_document
 ---
 
-
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -16,17 +14,21 @@ library(RNHANES)
 library(foreign)
 
 
+#Loading the data
 data2009 <- nhanes_load_data("DPQ_F", "2009-2010")
 
 data2011 <- nhanes_load_data("DPQ_G", "2011-2012")
 
 data2013 <- nhanes_load_data("DPQ_H", "2013-2014")
 
+#https://static-bcrf.biochem.wisc.edu/courses/Tabular-data-analysis-with-R-and-Tidyverse/book/6-importingdata.html
 download.file("https://wwwn.cdc.gov/nchs/nhanes/2015-2016/DPQ_I.xpt", 
               temp <- tempfile(), 
               mode="wb")
 
 data2015 <- foreign::read.xport(temp)
+
+#adding in columns that were missing from 2015 and 2017 data
 data2015$file_name <- c("DPQ_I")
 data2015$cycle <- c("2015-2016")
 data2015$begin_year <- c(2015)
@@ -34,11 +36,7 @@ data2015$begin_year <- as.double(data2015$begin_year)
 
 data2015$end_year <- c(2016)
 data2015$end_year <- as.double(data2015$end_year)
-
-data2015 <- subset(data2015, select = -c(Year))
-data2015
-
-
+################################################################################
 
 download.file("https://wwwn.cdc.gov/nchs/nhanes/2017-2018/DPQ_J.xpt", 
               tf <- tempfile(), 
@@ -51,14 +49,31 @@ data2017$begin_year <- c(2017)
 data2017$begin_year <- as.double(data2017$begin_year)
 data2017$end_year <- c(2018)
 data2017$end_year <- as.double(data2017$end_year)
+```
 
-data2017
-
+```{r}
+#combining all the datasets from 2009 to 2018 into one
 dataFrom20092011 <- rbind(data2009,data2011)
 dataFrom20092013 <- rbind(dataFrom20092011, data2013)
 dataFrom20152017 <- rbind(data2015, data2017)
 fulldataset <- rbind(dataFrom20092013,dataFrom20152017) 
 fulldataset
 
+#omitting all NA values: 29,167 to 17,561. 11,606 values were taken out. 
+fulldataset <- na.omit(fulldataset)
+```
+
+
+```{r}
+#Website: https://bmcrheumatol.biomedcentral.com/articles/10.1186/s41927-021-00236-w#:~:text=Adults%20(%E2%89%A5%2018%20years)%20with,9%20(PHQ%2D9).
+
+
+#Adding in a score column by calculating all the values in each column for a individual to get them a final score 
+fulldataset$score <- fulldataset$DPQ010 + fulldataset$DPQ020 + fulldataset$DPQ030 + fulldataset$DPQ040 + fulldataset$DPQ050 + fulldataset$DPQ060 + fulldataset$DPQ060 + fulldataset$DPQ070 + fulldataset$DPQ080 + fulldataset$DPQ090 + fulldataset$DPQ100
+
+
+#If a score is between 5 and 9: its classified as mild depression, 10 -27 is classified as Moderate to Severe
+fulldataset$finalScore <- ifelse(fulldataset$score %in% c(5:9), "Mild", "Moderate-Severe")
+fulldataset
 
 ```
