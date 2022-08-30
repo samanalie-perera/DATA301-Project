@@ -8,13 +8,36 @@ output: html_document
 ---
 # Background and Data
 
-Datasets:
-NHANES (National Health and Nutrition Examination Survey) March 2005 - 2020 dataset.
+## Datasets
+NHANES (National Health and Nutrition Examination Survey) March 2005 - 2020 Mental Health - Depression Screener datasets.
+
+## Source
+https://wwwn.cdc.gov/nchs/nhanes/Search/DataPage.aspx?Component=Questionnaire
+
+## Interest
+Predicting depression in the NHANES Questionnaires data using a deep learning algorithm.
+
+## Structure of the dataset
+There are 17 variables in our dataset: 3 categorical variables and 14 numerical variables. Therefore, we will use 10 variables; each is a question the respondents need to answer to help us identify whether a person has depression.
+
+## Compleness of the dataset
+
+## Steps to integrate the datasets
 
 # Ethics, Privacy and Security 
+## Ethical considerations
+
+## Privacy concerns
+
+## Security of the project
 
 # Exploratory Data Analysis
 
 # Individual Contributions
+## Vivian, 300525329
+
+## Saumya Sajwan,
+
+## Samanalie Perera,
 
 
