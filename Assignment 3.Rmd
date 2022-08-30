@@ -1,0 +1,20 @@
+---
+title: "Assignment 3"
+author: "Vivian, 300525329
+Saumya Sajwan, 
+Samanalie Perera"
+date: "2022-08-30"
+output: html_document
+---
+# Background and Data
+
+Datasets:
+NHANES (National Health and Nutrition Examination Survey) March 2005 - 2020 dataset.
+
+# Ethics, Privacy and Security 
+
+# Exploratory Data Analysis
+
+# Individual Contributions
+
+

@@ -12,16 +12,20 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 library(RNHANES)
 library(foreign)
+```
 
-
-#Loading the data
+# Loading the Data
+```{r}
+# 2005 - 2014 datasets
 data2005 <- nhanes_load_data("DPQ_D", "2005-2006")
 data2007 <- nhanes_load_data("DPQ_E", "2007-2008")
 data2009 <- nhanes_load_data("DPQ_F", "2009-2010")
 data2011 <- nhanes_load_data("DPQ_G", "2011-2012")
 data2013 <- nhanes_load_data("DPQ_H", "2013-2014")
+```
 
-data2017 <- nhanes_load_data("P_DPQ", "2017-2018")
+```{r}
+# 2015 - 2016 datasets
 
 #https://static-bcrf.biochem.wisc.edu/courses/Tabular-data-analysis-with-R-and-Tidyverse/book/6-importingdata.html
 download.file("https://wwwn.cdc.gov/nchs/nhanes/2015-2016/DPQ_I.xpt", 
@@ -38,8 +42,10 @@ data2015$begin_year <- as.double(data2015$begin_year)
 
 data2015$end_year <- c(2016)
 data2015$end_year <- as.double(data2015$end_year)
-################################################################################
+```
 
+```{r}
+# March 2017 - 202020 datasets
 download.file("https://wwwn.cdc.gov/nchs/nhanes/2017-2018/P_DPQ.xpt", 
               tf <- tempfile(), 
               mode="wb")
@@ -51,35 +57,33 @@ data2017$begin_year <- c(2017)
 data2017$begin_year <- as.double(data2017$begin_year)
 data2017$end_year <- c(2020)
 data2017$end_year <- as.double(data2017$end_year)
-tail(data2017)
 ```
 
 ```{r}
-#combining all the datasets from 2009 to 2018 into one
+# Combining all the datasets from 2009 to 2018 into one
 dataFrom20052008 <- rbind(data2005, data2007)
 dataFrom20092011 <- rbind(data2009,data2011)
 dataFrom20052011 <- rbind(dataFrom20052008,dataFrom20092011)
 dataFrom20112014 <- rbind(dataFrom20052011, data2013)
 dataFrom20152017 <- rbind(data2015, data2017)
 fulldataset <- rbind(dataFrom20112014,dataFrom20152017 )
-fulldataset
+```
 
-#omitting all NA values: 40,496 to 24,449. 16,047 values were taken out. 
+# Data Preparation
+```{r}
+# Omitting all NA values: 40,496 to 24,449. 16,047 values were taken out. 
 fulldataset <- na.omit(fulldataset)
-fulldataset
 ```
 
 ```{r}
 #Website: https://bmcrheumatol.biomedcentral.com/articles/10.1186/s41927-021-00236-w#:~:text=Adults%20(%E2%89%A5%2018%20years)%20with,9%20(PHQ%2D9).
 
-
-#Adding in a score column by calculating all the values in each column for a individual to get them a final score 
+# Adding in a score column by calculating all the values in each column for a individual to get them a final score 
 fulldataset$score <- fulldataset$DPQ010 + fulldataset$DPQ020 + fulldataset$DPQ030 + fulldataset$DPQ040 + fulldataset$DPQ050 + fulldataset$DPQ060 + fulldataset$DPQ060 + fulldataset$DPQ070 + fulldataset$DPQ080 + fulldataset$DPQ090 + fulldataset$DPQ100
-
 
 #If a score is greater or equal to 10, "1" means the individual has depression. "0" means the individual doesn't have depression
 fulldataset$finalScore <- ifelse(fulldataset$score <= 10, "0", "1")
-fulldataset
+head(fulldataset)
 ```
 
 
