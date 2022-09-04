@@ -1,0 +1,211 @@
+---
+title: "newvars"
+author: "Samanalie Perera, 300486075"
+date: "2022-09-04"
+output: html_document
+---
+
+```{r}
+library(RNHANES)
+library(foreign)
+```
+
+#loading other varaibles 
+#demographic, occupation, sleep disorders, alcohol use, recreational drug use, smoking.
+```{r}
+DEMdata2005 <- nhanes_load_data("DEMO_D", "2005-2006")
+DEMdata2007 <- nhanes_load_data("DEMO_E", "2007-2008")
+DEMdata2009 <- nhanes_load_data("DEMO_F", "2009-2010")
+DEMdata2011 <- nhanes_load_data("DEMO_G", "2011-2012")
+DEMdata2013 <- nhanes_load_data("DEMO_H", "2013-2014")
+
+download.file("https://wwwn.cdc.gov/nchs/nhanes/2015-2016/DEMO_I.xpt", 
+              temp <- tempfile(), 
+              mode="wb")
+
+DEMdata2015 <- foreign::read.xport(temp)
+
+
+################################################################################
+
+download.file("https://wwwn.cdc.gov/nchs/nhanes/2017-2018/P_DEMO.xpt", 
+              tf <- tempfile(), 
+              mode="wb")
+
+DEMdata2017 <- foreign::read.xport(tf)
+```
+
+```{r}
+demo_col <- c('RIDAGEYR', 'RIAGENDR', 'RIDRETH1', 'DMDMARTL', 'INDFMPIR')
+
+reduce_DEMdata2005 <- DEMdata2005[,demo_col]
+names(reduce_DEMdata2005) <- c('age','gender','race', 'marital_status', 'household_income')
+
+reduce_DEMdata2007 <- DEMdata2007[,demo_col]
+names(reduce_DEMdata2007) <- c('age','gender','race', 'marital_status', 'household_income')
+
+reduce_DEMdata2009 <- DEMdata2009[,demo_col]
+names(reduce_DEMdata2009) <- c('age','gender','race', 'marital_status', 'household_income')
+
+reduce_DEMdata2011 <- DEMdata2011[,demo_col]
+names(reduce_DEMdata2011) <- c('age','gender','race', 'marital_status', 'household_income')
+
+reduce_DEMdata2013 <- DEMdata2013[,demo_col]
+names(reduce_DEMdata2013) <- c('age','gender','race', 'marital_status', 'household_income')
+
+reduce_DEMdata2015 <- DEMdata2015[,demo_col]
+names(reduce_DEMdata2015) <- c('age','gender','race', 'marital_status', 'household_income')
+
+demo_col <- c('RIDAGEYR', 'RIAGENDR', 'RIDRETH1', 'DMDMARTZ', 'INDFMPIR')
+reduce_DEMdata2017 <- DEMdata2017[,demo_col]
+names(reduce_DEMdata2017) <- c('age','gender','race', 'marital_status', 'household_income')
+
+demo <- do.call(rbind, list(reduce_DEMdata2005, reduce_DEMdata2007, reduce_DEMdata2009,
+                    reduce_DEMdata2011, reduce_DEMdata2013, reduce_DEMdata2015,
+                    reduce_DEMdata2017))
+
+head(demo)
+```
+
+
+```{r}
+# Combining all the files into a DataFrame
+df_files = [pd.read_sas(file) for file in files]
+combined_df = pd.concat(df_files)
+
+    # Setting the index of the new DataFrame
+    combined_df.SEQN = combined_df.SEQN.astype('int64')
+    combined_df.set_index('SEQN', verify_integrity=True, inplace=True)
+    return combined_df
+
+```
+
+```{r}
+OCPdata2005 <- nhanes_load_data("OCQ_D", "2005-2006")
+OCPdata2007 <- nhanes_load_data("OCQ_E", "2007-2008")
+OCPdata2009 <- nhanes_load_data("OCQ_F", "2009-2010")
+OCPdata2011 <- nhanes_load_data("OCQ_G", "2011-2012")
+OCPdata2013 <- nhanes_load_data("OCQ_H", "2013-2014")
+
+
+download.file("https://wwwn.cdc.gov/nchs/nhanes/2015-2016/OCQ_I.xpt", 
+              temp <- tempfile(), 
+              mode="wb")
+
+OCPdata2015 <- foreign::read.xport(temp)
+
+################################################################################
+
+download.file("https://wwwn.cdc.gov/nchs/nhanes/2017-2018/P_OCQ.xpt", 
+              tf <- tempfile(), 
+              mode="wb")
+
+OCPdata2017 <- foreign::read.xport(tf)
+
+
+```
+
+```{r}
+SLPdata2005 <- nhanes_load_data("SLQ_D", "2005-2006")
+SLPdata2007 <- nhanes_load_data("SLQ_E", "2007-2008")
+SLPdata2009 <- nhanes_load_data("SLQ_F", "2009-2010")
+SLPdata2011 <- nhanes_load_data("SLQ_G", "2011-2012")
+SLPdata2013 <- nhanes_load_data("SLQ_H", "2013-2014")
+
+
+download.file("https://wwwn.cdc.gov/nchs/nhanes/2015-2016/SLQ_I.xpt", 
+              temp <- tempfile(), 
+              mode="wb")
+
+SLPdata2015 <- foreign::read.xport(temp)
+
+
+################################################################################
+
+download.file("https://wwwn.cdc.gov/nchs/nhanes/2017-2018/P_SLQ.xpt", 
+              tf <- tempfile(), 
+              mode="wb")
+
+SLPdata2017 <- foreign::read.xport(tf)
+
+```
+
+```{r}
+ALCdata2005 <- nhanes_load_data("ALQ_D", "2005-2006")
+ALCdata2007 <- nhanes_load_data("ALQ_E", "2007-2008")
+ALCdata2009 <- nhanes_load_data("ALQ_F", "2009-2010")
+ALCdata2011 <- nhanes_load_data("ALQ_G", "2011-2012")
+ALCdata2013 <- nhanes_load_data("ALQ_H", "2013-2014")
+#all the same
+colnames(ALCdata2005) 
+colnames(ALCdata2007)
+colnames(ALCdata2009)
+colnames(ALCdata2011)
+colnames(ALCdata2013)
+colnames(ALCdata2015)
+colnames(ALCdata2017)
+
+
+download.file("https://wwwn.cdc.gov/nchs/nhanes/2015-2016/ALQ_I.xpt", 
+              temp <- tempfile(), 
+              mode="wb")
+
+ALCdata2015 <- foreign::read.xport(temp)
+################################################################################
+
+download.file("https://wwwn.cdc.gov/nchs/nhanes/2017-2018/P_ALQ.xpt", 
+              tf <- tempfile(), 
+              mode="wb")
+
+ALCdata2017 <- foreign::read.xport(tf)
+
+
+```
+
+
+```{r}
+DRGdata2005 <- nhanes_load_data("DUQ_D", "2005-2006")
+DRGdata2007 <- nhanes_load_data("DUQ_E", "2007-2008")
+DRGdata2009 <- nhanes_load_data("DUQ_F", "2009-2010")
+DRGdata2011 <- nhanes_load_data("DUQ_G", "2011-2012")
+DRGdata2013 <- nhanes_load_data("DUQ_H", "2013-2014")
+
+
+download.file("https://wwwn.cdc.gov/nchs/nhanes/2015-2016/DUQ_I.xpt", 
+              temp <- tempfile(), 
+              mode="wb")
+
+DRGdata2015 <- foreign::read.xport(temp)
+################################################################################
+
+#there's no drug use data for 2017-march 2020 
+
+
+```
+
+
+```{r}
+SMKata2005 <- nhanes_load_data("SMQ_D", "2005-2006")
+SMKdata2007 <- nhanes_load_data("SMQ_E", "2007-2008")
+SMKdata2009 <- nhanes_load_data("SMQ_F", "2009-2010")
+SMKdata2011 <- nhanes_load_data("SMQ_G", "2011-2012")
+SMKdata2013 <- nhanes_load_data("SMQ_H", "2013-2014")
+
+
+
+download.file("https://wwwn.cdc.gov/nchs/nhanes/2015-2016/SMQ_I.xpt", 
+              temp <- tempfile(), 
+              mode="wb")
+
+SMKdata2015 <- foreign::read.xport(temp)
+################################################################################
+
+download.file("https://wwwn.cdc.gov/nchs/nhanes/2017-2018/P_SMQ.xpt", 
+              tf <- tempfile(), 
+              mode="wb")
+
+SMKdata2017 <- foreign::read.xport(tf)
+
+
+```
+
