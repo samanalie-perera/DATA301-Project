@@ -15,7 +15,7 @@ NHANES (National Health and Nutrition Examination Survey) March 2005 - 2020 Ment
 https://wwwn.cdc.gov/nchs/nhanes/Search/DataPage.aspx?Component=Questionnaire
 
 ## Interest
-Predicting depression in the NHANES Questionnaires data using a deep learning algorithm.
+We are interested in creating a machine learning model that finds and uses key features to identify individuals who are potentially suffering from depression. 
 
 ## Structure of the dataset
 There are 17 variables in our dataset: 3 categorical variables and 14 numerical variables. Therefore, we will use 10 variables; each is a question the respondents need to answer to help us identify whether a person has depression.
@@ -31,8 +31,8 @@ There are a number of ethical concerns that need to be considered when developin
 
 ## Privacy concerns
 
-## Security of the project
-
+## Security concerns
+If the algorithm is made public via a data leak, then anyone could use it to find out which individuals are more likely to be depressed. This information could be used to target those individuals with ads or content that exploits their vulnerabilities. For example, an advertiser could show ads for antidepressant medications to someone who is predicted to be depressed. 
 
 # Exploratory Data Analysis
 
