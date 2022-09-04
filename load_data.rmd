@@ -12,6 +12,8 @@ library(foreign)
 
 #loading other varaibles 
 #demographic, occupation, sleep disorders, alcohol use, recreational drug use, smoking.
+
+## Demographics Data
 ```{r}
 DEMdata2005 <- nhanes_load_data("DEMO_D", "2005-2006")
 DEMdata2007 <- nhanes_load_data("DEMO_E", "2007-2008")
@@ -36,48 +38,37 @@ DEMdata2017 <- foreign::read.xport(tf)
 ```
 
 ```{r}
-demo_col <- c('RIDAGEYR', 'RIAGENDR', 'RIDRETH1', 'DMDMARTL', 'INDFMPIR')
+demo_col <- c('SEQN', 'RIDAGEYR', 'RIAGENDR', 'RIDRETH1', 'DMDMARTL', 'INDFMPIR')
 
 reduce_DEMdata2005 <- DEMdata2005[,demo_col]
-names(reduce_DEMdata2005) <- c('age','gender','race', 'marital_status', 'household_income')
+names(reduce_DEMdata2005) <- c('id', 'age','gender','race', 'marital_status', 'Family PIR')
 
 reduce_DEMdata2007 <- DEMdata2007[,demo_col]
-names(reduce_DEMdata2007) <- c('age','gender','race', 'marital_status', 'household_income')
+names(reduce_DEMdata2007) <- c('id', 'age','gender','race', 'marital_status', 'Family PIR')
 
 reduce_DEMdata2009 <- DEMdata2009[,demo_col]
-names(reduce_DEMdata2009) <- c('age','gender','race', 'marital_status', 'household_income')
+names(reduce_DEMdata2009) <- c('id', 'age','gender','race', 'marital_status', 'Family PIR')
 
 reduce_DEMdata2011 <- DEMdata2011[,demo_col]
-names(reduce_DEMdata2011) <- c('age','gender','race', 'marital_status', 'household_income')
+names(reduce_DEMdata2011) <- c('id', 'age','gender','race', 'marital_status', 'Family PIR')
 
 reduce_DEMdata2013 <- DEMdata2013[,demo_col]
-names(reduce_DEMdata2013) <- c('age','gender','race', 'marital_status', 'household_income')
+names(reduce_DEMdata2013) <- c('id', 'age','gender','race', 'marital_status', 'Family PIR')
 
 reduce_DEMdata2015 <- DEMdata2015[,demo_col]
-names(reduce_DEMdata2015) <- c('age','gender','race', 'marital_status', 'household_income')
+names(reduce_DEMdata2015) <- c('id', 'age','gender','race', 'marital_status', 'Family PIR')
 
-demo_col <- c('RIDAGEYR', 'RIAGENDR', 'RIDRETH1', 'DMDMARTZ', 'INDFMPIR')
+demo_col <- c('SEQN', 'RIDAGEYR', 'RIAGENDR', 'RIDRETH1', 'DMDMARTZ', 'INDFMPIR')
 reduce_DEMdata2017 <- DEMdata2017[,demo_col]
-names(reduce_DEMdata2017) <- c('age','gender','race', 'marital_status', 'household_income')
+names(reduce_DEMdata2017) <- c('id', 'age','gender','race', 'marital_status', 'Family PIR')
 
 demo <- do.call(rbind, list(reduce_DEMdata2005, reduce_DEMdata2007, reduce_DEMdata2009,
                     reduce_DEMdata2011, reduce_DEMdata2013, reduce_DEMdata2015,
                     reduce_DEMdata2017))
 
+demo <- na.omit(demo)
+
 head(demo)
-```
-
-
-```{r}
-# Combining all the files into a DataFrame
-df_files = [pd.read_sas(file) for file in files]
-combined_df = pd.concat(df_files)
-
-    # Setting the index of the new DataFrame
-    combined_df.SEQN = combined_df.SEQN.astype('int64')
-    combined_df.set_index('SEQN', verify_integrity=True, inplace=True)
-    return combined_df
-
 ```
 
 ```{r}
