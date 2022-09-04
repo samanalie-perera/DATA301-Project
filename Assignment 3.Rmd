@@ -2,7 +2,7 @@
 title: "Assignment 3"
 author: "Vivian, 300525329
 Saumya Sajwan, 300529034
-Samanalie Perera"
+Samanalie Perera, 300486075"
 date: "2022-08-30"
 output: html_document
 ---
@@ -20,9 +20,20 @@ We are interested in creating a machine learning model that finds and uses key f
 ## Structure of the dataset
 There are 17 variables in our dataset: 3 categorical variables and 14 numerical variables. Therefore, we will use 10 variables; each is a question the respondents need to answer to help us identify whether a person has depression.
 
-## Compleness of the dataset
+## Complete dataset
+- The dataset consists of data from 2005 to March of 2020. We were going to add in later data from 2004-1999, however the datasets for them were completely different. They had more questions and didn't match the 2005-2020 questions, so we decided to not add them in. 
+
+- We also got rid of all the NA values. These values don't have any value to our target variable. This meant that our dataset went down from 43,928 to 26,627. 17, 301 values were taken out.  
+
 
 ## Steps to integrate the datasets
+To create the data set, the Mental health - Depression Screener data sets was combined into one:
+
+- Loaded the NHANES package on R, only the datasets from 2005 to 2014 were part of the package so for 2015 - March 2020, we had to read them in using a R function (foreign::read.xport) where it reads the data from a SAS XPORT file and returns the data in a dataframe. 
+- Adding in more columns: filename, cycle, start year and end year, so the data from the newer datasets match the older ones.
+- Added all the datasets together into one large dataset using rbind
+- To find out the total score each individual had, we added each of the columns together and added them to a new column called Score
+- Adding in another column for classifying whether or not a individual has depression. For that we said that if Score was 10 or higher then that person has depression if not they don't. We used this website for the score: https://bmcrheumatol.biomedcentral.com/articles/10.1186/s41927-021-00236-w#:~:text=Adults%20(%E2%89%A5%2018%20years)%20with,9%20(PHQ%2D9)
 
 # Ethics, Privacy and Security 
 
@@ -43,6 +54,6 @@ If the algorithm is made public via a data leak, then anyone could use it to fin
 
 ## Saumya Sajwan, 300529034
 
-## Samanalie Perera,
+## Samanalie Perera, 300486075
 
 
