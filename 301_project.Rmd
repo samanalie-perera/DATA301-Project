@@ -22,6 +22,9 @@ data2007 <- nhanes_load_data("DPQ_E", "2007-2008")
 data2009 <- nhanes_load_data("DPQ_F", "2009-2010")
 data2011 <- nhanes_load_data("DPQ_G", "2011-2012")
 data2013 <- nhanes_load_data("DPQ_H", "2013-2014")
+
+
+
 ```
 
 ```{r}

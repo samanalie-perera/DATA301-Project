@@ -25,18 +25,23 @@ There are 17 variables in our dataset: 3 categorical variables and 14 numerical 
 ## Steps to integrate the datasets
 
 # Ethics, Privacy and Security 
+
 ## Ethical considerations
+There are a number of ethical concerns that need to be considered when developing and deploying a machine learning algorithm that predicts if an individual is depressed. First, it is important to consider the potential impact of false positives and false negatives. If the algorithm incorrectly predicts that an individual is depressed, this could lead to them being unnecessarily treated or stigmatized. On the other hand, if the algorithm fails to predict that an individual is depressed, this could result in them not receiving the help they need. 
 
 ## Privacy concerns
 
 ## Security of the project
 
+
 # Exploratory Data Analysis
+
+
 
 # Individual Contributions
 ## Vivian, 300525329
 
-## Saumya Sajwan,
+## Saumya Sajwan, 300529034
 
 ## Samanalie Perera,
 
