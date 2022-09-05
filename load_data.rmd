@@ -10,9 +10,6 @@ library(RNHANES)
 library(foreign)
 ```
 
-#loading other varaibles 
-#demographic, occupation, sleep disorders, alcohol use, recreational drug use, smoking.
-
 ## Demographics Data
 ```{r}
 DEMdata2005 <- nhanes_load_data("DEMO_D", "2005-2006")
@@ -236,4 +233,16 @@ head(smoking)
 ```{r}
 summary(smoking)
 dim(smoking)
+```
+
+# Complete dataset
+```{r}
+df_list <- list(demo, sleep, alcohol, smoking)      
+df <- Reduce(function(x, y) merge(x, y, all=TRUE), df_list)  
+df <- na.omit(df)
+head(df)
+```
+```{r}
+dim(df)
+summary(df)
 ```
