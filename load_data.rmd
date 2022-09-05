@@ -27,7 +27,6 @@ download.file("https://wwwn.cdc.gov/nchs/nhanes/2015-2016/DEMO_I.xpt",
 
 DEMdata2015 <- foreign::read.xport(temp)
 
-
 ################################################################################
 
 download.file("https://wwwn.cdc.gov/nchs/nhanes/2017-2018/P_DEMO.xpt", 
@@ -41,35 +40,33 @@ DEMdata2017 <- foreign::read.xport(tf)
 demo_col <- c('SEQN', 'RIDAGEYR', 'RIAGENDR', 'RIDRETH1', 'DMDMARTL', 'INDFMPIR')
 
 reduce_DEMdata2005 <- DEMdata2005[,demo_col]
-names(reduce_DEMdata2005) <- c('id', 'age','gender','race', 'marital_status', 'Family PIR')
-
 reduce_DEMdata2007 <- DEMdata2007[,demo_col]
-names(reduce_DEMdata2007) <- c('id', 'age','gender','race', 'marital_status', 'Family PIR')
-
 reduce_DEMdata2009 <- DEMdata2009[,demo_col]
-names(reduce_DEMdata2009) <- c('id', 'age','gender','race', 'marital_status', 'Family PIR')
-
 reduce_DEMdata2011 <- DEMdata2011[,demo_col]
-names(reduce_DEMdata2011) <- c('id', 'age','gender','race', 'marital_status', 'Family PIR')
-
 reduce_DEMdata2013 <- DEMdata2013[,demo_col]
-names(reduce_DEMdata2013) <- c('id', 'age','gender','race', 'marital_status', 'Family PIR')
-
 reduce_DEMdata2015 <- DEMdata2015[,demo_col]
-names(reduce_DEMdata2015) <- c('id', 'age','gender','race', 'marital_status', 'Family PIR')
 
+demo2005_2015 <- do.call(rbind, list(reduce_DEMdata2005, reduce_DEMdata2007,
+                            reduce_DEMdata2009, reduce_DEMdata2011,
+                            reduce_DEMdata2013, reduce_DEMdata2015))
+
+names(demo2005_2015) <- c('id', 'age','gender','race', 'marital_status', 'Family PIR')
+```
+
+```{r}
 demo_col <- c('SEQN', 'RIDAGEYR', 'RIAGENDR', 'RIDRETH1', 'DMDMARTZ', 'INDFMPIR')
 reduce_DEMdata2017 <- DEMdata2017[,demo_col]
 names(reduce_DEMdata2017) <- c('id', 'age','gender','race', 'marital_status', 'Family PIR')
 
-demo <- do.call(rbind, list(reduce_DEMdata2005, reduce_DEMdata2007,
-                            reduce_DEMdata2009, reduce_DEMdata2011,
-                            reduce_DEMdata2013, reduce_DEMdata2015,
-                            reduce_DEMdata2017))
-
+demo <- do.call(rbind, list(demo2005_2015, reduce_DEMdata2017))
+demo <- demo[!(demo$marital_status == 77 | demo$marital_status == 99),]
 demo <- na.omit(demo)
-
 head(demo)
+```
+
+```{r}
+summary(demo)
+dim(demo)
 ```
 
 ## Sleep Disorders
@@ -80,13 +77,11 @@ SLPdata2009 <- nhanes_load_data("SLQ_F", "2009-2010")
 SLPdata2011 <- nhanes_load_data("SLQ_G", "2011-2012")
 SLPdata2013 <- nhanes_load_data("SLQ_H", "2013-2014")
 
-
 download.file("https://wwwn.cdc.gov/nchs/nhanes/2015-2016/SLQ_I.xpt", 
               temp <- tempfile(), 
               mode="wb")
 
 SLPdata2015 <- foreign::read.xport(temp)
-
 
 ################################################################################
 
@@ -95,7 +90,6 @@ download.file("https://wwwn.cdc.gov/nchs/nhanes/2017-2018/P_SLQ.xpt",
               mode="wb")
 
 SLPdata2017 <- foreign::read.xport(tf)
-
 ```
 
 ```{r}
@@ -134,26 +128,24 @@ head(sleep)
 ```
 
 ```{r}
+summary(sleep)
+dim(sleep)
+```
+
+## Alcohol Use
+```{r}
 ALCdata2005 <- nhanes_load_data("ALQ_D", "2005-2006")
 ALCdata2007 <- nhanes_load_data("ALQ_E", "2007-2008")
 ALCdata2009 <- nhanes_load_data("ALQ_F", "2009-2010")
 ALCdata2011 <- nhanes_load_data("ALQ_G", "2011-2012")
 ALCdata2013 <- nhanes_load_data("ALQ_H", "2013-2014")
-#all the same
-colnames(ALCdata2005) 
-colnames(ALCdata2007)
-colnames(ALCdata2009)
-colnames(ALCdata2011)
-colnames(ALCdata2013)
-colnames(ALCdata2015)
-colnames(ALCdata2017)
-
 
 download.file("https://wwwn.cdc.gov/nchs/nhanes/2015-2016/ALQ_I.xpt", 
               temp <- tempfile(), 
               mode="wb")
 
 ALCdata2015 <- foreign::read.xport(temp)
+
 ################################################################################
 
 download.file("https://wwwn.cdc.gov/nchs/nhanes/2017-2018/P_ALQ.xpt", 
@@ -161,46 +153,52 @@ download.file("https://wwwn.cdc.gov/nchs/nhanes/2017-2018/P_ALQ.xpt",
               mode="wb")
 
 ALCdata2017 <- foreign::read.xport(tf)
-
-
 ```
 
-
 ```{r}
-DRGdata2005 <- nhanes_load_data("DUQ_D", "2005-2006")
-DRGdata2007 <- nhanes_load_data("DUQ_E", "2007-2008")
-DRGdata2009 <- nhanes_load_data("DUQ_F", "2009-2010")
-DRGdata2011 <- nhanes_load_data("DUQ_G", "2011-2012")
-DRGdata2013 <- nhanes_load_data("DUQ_H", "2013-2014")
+alcohol_col <- c('SEQN', 'ALQ130')
 
+reduce_ALCdata2005 <- ALCdata2005[,alcohol_col]
+reduce_ALCdata2007 <- ALCdata2007[,alcohol_col]
+reduce_ALCdata2009 <- ALCdata2009[,alcohol_col]
+reduce_ALCdata2011 <- ALCdata2011[,alcohol_col]
+reduce_ALCdata2013 <- ALCdata2013[,alcohol_col]
+reduce_ALCdata2015 <- ALCdata2015[,alcohol_col]
+reduce_ALCdata2017 <- ALCdata2017[,alcohol_col]
 
-download.file("https://wwwn.cdc.gov/nchs/nhanes/2015-2016/DUQ_I.xpt", 
-              temp <- tempfile(), 
-              mode="wb")
+alcohol <- do.call(rbind, list(reduce_ALCdata2005, reduce_ALCdata2007,
+                             reduce_ALCdata2009, reduce_ALCdata2011,
+                             reduce_ALCdata2013, reduce_ALCdata2015,
+                             reduce_ALCdata2017))
 
-DRGdata2015 <- foreign::read.xport(temp)
-################################################################################
+names(alcohol) <- c('id', 'drinks_per_occasion')
 
-#there's no drug use data for 2017-march 2020 
+alcohol <- alcohol[!(alcohol$drinks_per_occasion == 777 | alcohol$drinks_per_occasion == 999),]
 
+alcohol <- na.omit(alcohol)
 
+head(alcohol)
 ```
 
-
 ```{r}
-SMKata2005 <- nhanes_load_data("SMQ_D", "2005-2006")
+summary(alcohol)
+dim(alcohol)
+```
+
+## Smoking
+```{r}
+SMKdata2005 <- nhanes_load_data("SMQ_D", "2005-2006")
 SMKdata2007 <- nhanes_load_data("SMQ_E", "2007-2008")
 SMKdata2009 <- nhanes_load_data("SMQ_F", "2009-2010")
 SMKdata2011 <- nhanes_load_data("SMQ_G", "2011-2012")
 SMKdata2013 <- nhanes_load_data("SMQ_H", "2013-2014")
-
-
 
 download.file("https://wwwn.cdc.gov/nchs/nhanes/2015-2016/SMQ_I.xpt", 
               temp <- tempfile(), 
               mode="wb")
 
 SMKdata2015 <- foreign::read.xport(temp)
+
 ################################################################################
 
 download.file("https://wwwn.cdc.gov/nchs/nhanes/2017-2018/P_SMQ.xpt", 
@@ -208,32 +206,34 @@ download.file("https://wwwn.cdc.gov/nchs/nhanes/2017-2018/P_SMQ.xpt",
               mode="wb")
 
 SMKdata2017 <- foreign::read.xport(tf)
-
-
 ```
 
 ```{r}
-OCPdata2005 <- nhanes_load_data("OCQ_D", "2005-2006")
-OCPdata2007 <- nhanes_load_data("OCQ_E", "2007-2008")
-OCPdata2009 <- nhanes_load_data("OCQ_F", "2009-2010")
-OCPdata2011 <- nhanes_load_data("OCQ_G", "2011-2012")
-OCPdata2013 <- nhanes_load_data("OCQ_H", "2013-2014")
+smoking_col <- c('SEQN', 'SMQ020')
 
+reduce_SMKdata2005 <- SMKdata2005[,smoking_col]
+reduce_SMKdata2007 <- SMKdata2007[,smoking_col]
+reduce_SMKdata2009 <- SMKdata2009[,smoking_col]
+reduce_SMKdata2011 <- SMKdata2011[,smoking_col]
+reduce_SMKdata2013 <- SMKdata2013[,smoking_col]
+reduce_SMKdata2015 <- SMKdata2015[,smoking_col]
+reduce_SMKdata2017 <- SMKdata2017[,smoking_col]
 
-download.file("https://wwwn.cdc.gov/nchs/nhanes/2015-2016/OCQ_I.xpt", 
-              temp <- tempfile(), 
-              mode="wb")
+smoking <- do.call(rbind, list(reduce_SMKdata2005, reduce_SMKdata2007,
+                             reduce_SMKdata2009, reduce_SMKdata2011,
+                             reduce_SMKdata2013, reduce_SMKdata2015,
+                             reduce_SMKdata2017))
 
-OCPdata2015 <- foreign::read.xport(temp)
+names(smoking) <- c('id', 'smoked_at_least_100')
 
-################################################################################
+smoking <- smoking[!(smoking$smoked_at_least_100 == 7 | smoking$smoked_at_least_100 == 9),]
 
-download.file("https://wwwn.cdc.gov/nchs/nhanes/2017-2018/P_OCQ.xpt", 
-              tf <- tempfile(), 
-              mode="wb")
+smoking <- na.omit(smoking)
 
-OCPdata2017 <- foreign::read.xport(tf)
-
-
+head(smoking)
 ```
 
+```{r}
+summary(smoking)
+dim(smoking)
+```
