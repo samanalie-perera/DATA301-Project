@@ -62,6 +62,82 @@ SMQ910 > 2
 SMQ915 > 30
 
 
+# Physical Activity
+## Columns
+ALL
+
+## Missing Data Code
+PAQ605 > 2
+PAQ610 > 7
+PAD615 > 840
+PAQ620 > 2
+PAQ625 > 7
+PAD630 > 840
+PAQ635 > 7
+PAQ640 > 7
+PAD645 > 660
+PAQ650 > 2
+PAQ655 > 7
+PAD660 > 480
+PAQ665 > 2
+PAQ670 > 7
+PAD675 > 540
+PAD680 > 1320
+
+# Physical Functioning
+## Columns
+cols = c("PFQ020", "PFQ030", "PFQ049", "PFQ051", "PFQ054", "PFQ057", "PFQ059", "PFQ090")
+
+## Missing Data Code
+PFQ020 > 2
+PFQ030 > 2
+PFQ049 > 2
+PFQ051 > 2
+PFQ054 > 2
+PFQ057 > 2
+PFQ059 > 2
+PFQ090 > 2
+
+# Weight History
+## Columns
+cols = c("SEQN", "WHD010", "WHD020", "WHQ030", "WHQ040", "WHD050", "WHQ070", "WHQ225", "WHD110", "WHD120", "WHD140", "WHQ150", "WHQ190'
+)
+
+## Missing Data Code
+WHD010 > 82
+WHD020 > 484
+WHQ030 > 3
+WHQ040 > 3
+WHD050 > 520
+WHQ070 > 2
+WHQ225 > 5
+WHD110 > 630
+WHD120 > 530
+WHD140 > 630
+WHQ150 > 80
+WHQ190 > 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
