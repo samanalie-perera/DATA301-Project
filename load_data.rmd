@@ -320,6 +320,7 @@ depression <- data.frame(fulldataset$SEQN, fulldataset$finalScore)
 names(depression) <- c('id', 'result')
 df <- merge(depression, var_df, by = c("id"))       
 head(df)
+#write.csv(df, 'project_data.csv')
 ```
 
 ```{r}
