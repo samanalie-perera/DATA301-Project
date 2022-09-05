@@ -417,4 +417,6 @@ write.csv(df, 'project_data.csv')
 ```{r}
 dim(df)
 summary(df)
+
+# numerical: age, sleep_hours, SMD641, WHD010, WHD020, WHD050, WHD110, WHD120, WHD140
 ```
