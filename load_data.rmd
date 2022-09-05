@@ -62,40 +62,17 @@ demo_col <- c('SEQN', 'RIDAGEYR', 'RIAGENDR', 'RIDRETH1', 'DMDMARTZ', 'INDFMPIR'
 reduce_DEMdata2017 <- DEMdata2017[,demo_col]
 names(reduce_DEMdata2017) <- c('id', 'age','gender','race', 'marital_status', 'Family PIR')
 
-demo <- do.call(rbind, list(reduce_DEMdata2005, reduce_DEMdata2007, reduce_DEMdata2009,
-                    reduce_DEMdata2011, reduce_DEMdata2013, reduce_DEMdata2015,
-                    reduce_DEMdata2017))
+demo <- do.call(rbind, list(reduce_DEMdata2005, reduce_DEMdata2007,
+                            reduce_DEMdata2009, reduce_DEMdata2011,
+                            reduce_DEMdata2013, reduce_DEMdata2015,
+                            reduce_DEMdata2017))
 
 demo <- na.omit(demo)
 
 head(demo)
 ```
 
-```{r}
-OCPdata2005 <- nhanes_load_data("OCQ_D", "2005-2006")
-OCPdata2007 <- nhanes_load_data("OCQ_E", "2007-2008")
-OCPdata2009 <- nhanes_load_data("OCQ_F", "2009-2010")
-OCPdata2011 <- nhanes_load_data("OCQ_G", "2011-2012")
-OCPdata2013 <- nhanes_load_data("OCQ_H", "2013-2014")
-
-
-download.file("https://wwwn.cdc.gov/nchs/nhanes/2015-2016/OCQ_I.xpt", 
-              temp <- tempfile(), 
-              mode="wb")
-
-OCPdata2015 <- foreign::read.xport(temp)
-
-################################################################################
-
-download.file("https://wwwn.cdc.gov/nchs/nhanes/2017-2018/P_OCQ.xpt", 
-              tf <- tempfile(), 
-              mode="wb")
-
-OCPdata2017 <- foreign::read.xport(tf)
-
-
-```
-
+## Sleep Disorders
 ```{r}
 SLPdata2005 <- nhanes_load_data("SLQ_D", "2005-2006")
 SLPdata2007 <- nhanes_load_data("SLQ_E", "2007-2008")
@@ -119,6 +96,41 @@ download.file("https://wwwn.cdc.gov/nchs/nhanes/2017-2018/P_SLQ.xpt",
 
 SLPdata2017 <- foreign::read.xport(tf)
 
+```
+
+```{r}
+sleep_col <- c('SEQN', 'SLD010H', 'SLQ050')
+
+reduce_SLPdata2005 <- SLPdata2005[,sleep_col]
+reduce_SLPdata2007 <- SLPdata2007[,sleep_col]
+reduce_SLPdata2009 <- SLPdata2009[,sleep_col]
+reduce_SLPdata2011 <- SLPdata2011[,sleep_col]
+reduce_SLPdata2013 <- SLPdata2013[,sleep_col]
+
+sleep2005_2013 <- do.call(rbind, list(reduce_SLPdata2005, reduce_SLPdata2007,
+                             reduce_SLPdata2009, reduce_SLPdata2011,
+                             reduce_SLPdata2013))
+
+names(sleep2005_2013) <- c('id', 'sleep_hours', 'trouble_sleeping_history')
+
+sleep2005_2013 <- sleep2005_2013[!(sleep2005_2013$sleep_hours == 77 | sleep2005_2013$sleep_hours == 99),]
+```
+
+```{r}
+sleep_col <- c('SEQN', 'SLD012', 'SLQ050')
+reduce_SLPdata2015 <- SLPdata2015[,sleep_col]
+names(reduce_SLPdata2015) <- c('id', 'sleep_hours', 'trouble_sleeping_history')
+
+reduce_SLPdata2017 <- SLPdata2017[,sleep_col]
+names(reduce_SLPdata2017) <- c('id', 'sleep_hours', 'trouble_sleeping_history')
+
+
+sleep <- do.call(rbind, list(sleep2005_2013, reduce_SLPdata2015,
+                             reduce_SLPdata2017))
+
+sleep <- na.omit(sleep)
+
+head(sleep)
 ```
 
 ```{r}
@@ -196,6 +208,31 @@ download.file("https://wwwn.cdc.gov/nchs/nhanes/2017-2018/P_SMQ.xpt",
               mode="wb")
 
 SMKdata2017 <- foreign::read.xport(tf)
+
+
+```
+
+```{r}
+OCPdata2005 <- nhanes_load_data("OCQ_D", "2005-2006")
+OCPdata2007 <- nhanes_load_data("OCQ_E", "2007-2008")
+OCPdata2009 <- nhanes_load_data("OCQ_F", "2009-2010")
+OCPdata2011 <- nhanes_load_data("OCQ_G", "2011-2012")
+OCPdata2013 <- nhanes_load_data("OCQ_H", "2013-2014")
+
+
+download.file("https://wwwn.cdc.gov/nchs/nhanes/2015-2016/OCQ_I.xpt", 
+              temp <- tempfile(), 
+              mode="wb")
+
+OCPdata2015 <- foreign::read.xport(temp)
+
+################################################################################
+
+download.file("https://wwwn.cdc.gov/nchs/nhanes/2017-2018/P_OCQ.xpt", 
+              tf <- tempfile(), 
+              mode="wb")
+
+OCPdata2017 <- foreign::read.xport(tf)
 
 
 ```
