@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Vivian, 300525329 Saumya Sajwan, Samanalie Perera" />
+<meta name="author" content="Vivian, 300525329 Saumya Sajwan, 300529034 Samanalie Perera, 300486075" />
 
 <meta name="date" content="2022-08-30" />
 
@@ -364,8 +364,8 @@ pre code {
 
 
 <h1 class="title toc-ignore">Assignment 3</h1>
-<h4 class="author">Vivian, 300525329 Saumya Sajwan, Samanalie
-Perera</h4>
+<h4 class="author">Vivian, 300525329 Saumya Sajwan, 300529034 Samanalie
+Perera, 300486075</h4>
 <h4 class="date">2022-08-30</h4>
 
 </div>
@@ -375,17 +375,88 @@ Perera</h4>
 <h1>Background and Data</h1>
 <div id="datasets" class="section level2">
 <h2>Datasets</h2>
+<div id="target-disease-depression" class="section level3">
+<h3>Target Disease: Depression</h3>
 <p>NHANES (National Health and Nutrition Examination Survey) March 2005
 - 2020 Mental Health - Depression Screener datasets.</p>
+</div>
+<div id="predictors" class="section level3">
+<h3>Predictors</h3>
+<div id="demographics-data" class="section level4">
+<h4>Demographics Data</h4>
+<p>NHANES (National Health and Nutrition Examination Survey) March 2005
+- 2020 Demographic Variables &amp; Sample Weights datasets.</p>
+</div>
+<div id="sleep-disorders" class="section level4">
+<h4>Sleep Disorders</h4>
+<p>NHANES (National Health and Nutrition Examination Survey) March 2005
+- 2020 Sleep Disorders datasets.</p>
+</div>
+<div id="alcohol-use" class="section level4">
+<h4>Alcohol Use</h4>
+<p>NHANES (National Health and Nutrition Examination Survey) March 2005
+- 2020 Alcohol Use datasets.</p>
+</div>
+<div id="smoking---cigarette-use" class="section level4">
+<h4>Smoking - Cigarette Use</h4>
+<p>NHANES (National Health and Nutrition Examination Survey) March 2005
+- 2020 Smoking - Cigarette Use datasets.</p>
+</div>
+<div id="weight-history" class="section level4">
+<h4>Weight History</h4>
+<p>NHANES (National Health and Nutrition Examination Survey) March 2005
+- 2020 Weight History datasets.</p>
+</div>
+</div>
 </div>
 <div id="source" class="section level2">
 <h2>Source</h2>
 <p><a href="https://wwwn.cdc.gov/nchs/nhanes/Search/DataPage.aspx?Component=Questionnaire" class="uri">https://wwwn.cdc.gov/nchs/nhanes/Search/DataPage.aspx?Component=Questionnaire</a></p>
+<div id="target-disease" class="section level3">
+<h3>Target Disease</h3>
+<p>DPQ_D.xpt (March 2005 - 2006) DPQ_E.xpt (2007-2008) DPQ_F.xpt
+(2009-2010) DPQ_G.xpt (2011 - 2012) DPQ_H.xpt (2013 - 2014) DPQ_I.xpt
+(2015 - 2016) P_DPQ.xpt (2017 - 2020)</p>
+</div>
+<div id="predictors-1" class="section level3">
+<h3>Predictors</h3>
+<div id="demographics-data-1" class="section level4">
+<h4>Demographics Data</h4>
+<p>DEMO_D.xpt (March 2005 - 2006) DEMO_E.xpt (2007-2008) DEMO_F.xpt
+(2009-2010) DEMO_G.xpt (2011 - 2012) DEMO_H.xpt (2013 - 2014) DEMO_I.xpt
+(2015 - 2016) P_DEMO.xpt (2017 - 2020)</p>
+</div>
+<div id="sleep-disorders-1" class="section level4">
+<h4>Sleep Disorders</h4>
+<p>SLQ_D.xpt (March 2005 - 2006) SLQ_E.xpt (2007-2008) SLQ_F.xpt
+(2009-2010) SLQ_G.xpt (2011 - 2012) SLQ_H.xpt (2013 - 2014) SLQ_I.xpt
+(2015 - 2016) P_SLQ.xpt (2017 - 2020)</p>
+</div>
+<div id="alcohol-use-1" class="section level4">
+<h4>Alcohol Use</h4>
+<p>ALQ_D.xpt (March 2005 - 2006) ALQ_E.xpt (2007-2008) ALQ_F.xpt
+(2009-2010) ALQ_G.xpt (2011 - 2012) ALQ_H.xpt (2013 - 2014) ALQ_I.xpt
+(2015 - 2016) P_ALQ.xpt (2017 - 2020)</p>
+</div>
+<div id="smoking---cigarette-use-1" class="section level4">
+<h4>Smoking - Cigarette Use</h4>
+<p>SMQ_D.xpt (March 2005 - 2006) SMQ_E.xpt (2007-2008) SMQ_F.xpt
+(2009-2010) SMQ_G.xpt (2011 - 2012) SMQ_H.xpt (2013 - 2014) SMQ_I.xpt
+(2015 - 2016) P_SMQ.xpt (2017 - 2020)</p>
+</div>
+<div id="weight-history-1" class="section level4">
+<h4>Weight History</h4>
+<p>WHQ_D.xpt (March 2005 - 2006) WHQ_E.xpt (2007-2008) WHQ_F.xpt
+(2009-2010) WHQ_G.xpt (2011 - 2012) WHQ_H.xpt (2013 - 2014) WHQ_I.xpt
+(2015 - 2016) P_WHQ.xpt (2017 - 2020)</p>
+</div>
+</div>
 </div>
 <div id="interest" class="section level2">
 <h2>Interest</h2>
-<p>Predicting depression in the NHANES Questionnaires data using a deep
-learning algorithm.</p>
+<p>We are interested in creating a machine learning model that finds and
+uses key features to identify individuals who are potentially suffering
+from depression.</p>
 </div>
 <div id="structure-of-the-dataset" class="section level2">
 <h2>Structure of the dataset</h2>
@@ -394,21 +465,90 @@ numerical variables. Therefore, we will use 10 variables; each is a
 question the respondents need to answer to help us identify whether a
 person has depression.</p>
 </div>
-<div id="compleness-of-the-dataset" class="section level2">
-<h2>Compleness of the dataset</h2>
+<div id="complete-dataset" class="section level2">
+<h2>Complete dataset</h2>
+<ul>
+<li><p>The dataset consists of data from 2005 to March of 2020. We were
+going to add in later data from 2004-1999, however the datasets for them
+were completely different. They had more questions and didn’t match the
+2005-2020 questions, so we decided to not add them in.</p></li>
+<li><p>We also got rid of all the NA values. These values don’t have any
+value to our target variable. This meant that our dataset went down from
+43,928 to 26,627. 17, 301 values were taken out.</p></li>
+</ul>
 </div>
 <div id="steps-to-integrate-the-datasets" class="section level2">
 <h2>Steps to integrate the datasets</h2>
+<p>To create the data set, the Mental health - Depression Screener data
+sets was combined into one:</p>
+<ul>
+<li>Loaded the NHANES package on R, only the datasets from 2005 to 2014
+were part of the package so for 2015 - March 2020, we had to read them
+in using a R function (foreign::read.xport) where it reads the data from
+a SAS XPORT file and returns the data in a dataframe.</li>
+<li>Adding in more columns: filename, cycle, start year and end year, so
+the data from the newer datasets match the older ones.</li>
+<li>Added all the datasets together into one large dataset using
+rbind</li>
+<li>To find out the total score each individual had, we added each of
+the columns together and added them to a new column called Score</li>
+<li>Adding in another column for classifying whether or not a individual
+has depression. For that we said that if Score was 10 or higher then
+that person has depression if not they don’t. We used this website for
+the score: <a href="https://bmcrheumatol.biomedcentral.com/articles/10.1186/s41927-021-00236-w#" class="uri">https://bmcrheumatol.biomedcentral.com/articles/10.1186/s41927-021-00236-w#</a>:~:text=Adults%20(%E2%89%A5%2018%20years)%20with,9%20(PHQ%2D9)</li>
+</ul>
 </div>
 </div>
 <div id="ethics-privacy-and-security" class="section level1">
 <h1>Ethics, Privacy and Security</h1>
+<div id="ethical-considerations" class="section level2">
+<h2>Ethical considerations</h2>
+<p>There are a number of ethical concerns that need to be considered
+when developing and deploying a machine learning algorithm that predicts
+if an individual is depressed. First, it is important to consider the
+potential impact of false positives and false negatives. If the
+algorithm incorrectly predicts that an individual is depressed, this
+could lead to them being unnecessarily treated or stigmatized. On the
+other hand, if the algorithm fails to predict that an individual is
+depressed, this could result in them not receiving the help they
+need.</p>
+</div>
+<div id="privacy-concerns" class="section level2">
+<h2>Privacy concerns</h2>
+</div>
+<div id="security-concerns" class="section level2">
+<h2>Security concerns</h2>
+<p>If the algorithm is made public via a data leak, then anyone could
+use it to find out which individuals are more likely to be depressed.
+This information could be used to target those individuals with ads or
+content that exploits their vulnerabilities. For example, an advertiser
+could show ads for antidepressant medications to someone who is
+predicted to be depressed.</p>
+</div>
 </div>
 <div id="exploratory-data-analysis" class="section level1">
 <h1>Exploratory Data Analysis</h1>
+<pre class="r"><code>df = read.csv(&quot;project_data.csv&quot;)
+#df.drop(c(&quot;id&quot;, &quot;X&quot;)
+
+dim(df)</code></pre>
+<pre><code>## [1] 26627    30</code></pre>
+<p>There are 13471 rows and 12 features in our data. One of</p>
 </div>
 <div id="individual-contributions" class="section level1">
 <h1>Individual Contributions</h1>
+<div id="vivian-300525329" class="section level2">
+<h2>Vivian, 300525329</h2>
+<ul>
+<li>Background and Data: Datasets, Source,</li>
+</ul>
+</div>
+<div id="saumya-sajwan-300529034" class="section level2">
+<h2>Saumya Sajwan, 300529034</h2>
+</div>
+<div id="samanalie-perera-300486075" class="section level2">
+<h2>Samanalie Perera, 300486075</h2>
+</div>
 </div>
 
 

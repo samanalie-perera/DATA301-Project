@@ -269,7 +269,7 @@ summary(alcohol)
 dim(alcohol)
 ```
 
-## Smoking
+## Smoking - Cigarette Use
 ```{r}
 SMKdata2005 <- nhanes_load_data("SMQ_D", "2005-2006")
 SMKdata2007 <- nhanes_load_data("SMQ_E", "2007-2008")
