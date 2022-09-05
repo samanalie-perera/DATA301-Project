@@ -8,6 +8,7 @@ output: html_document
 ```{r}
 library(RNHANES)
 library(foreign)
+library(dplyr)
 ```
 
 # Loading the Data
@@ -81,6 +82,10 @@ fulldataset$score <- fulldataset$DPQ010 + fulldataset$DPQ020 + fulldataset$DPQ03
 fulldataset$finalScore <- ifelse(fulldataset$score <= 10, "0", "1")
 head(fulldataset)
 ```
+```{r}
+dim(fulldataset)
+
+```
 
 ## Demographics Data
 ```{r}
@@ -106,7 +111,7 @@ DEMdata2017 <- foreign::read.xport(tf)
 ```
 
 ```{r}
-demo_col <- c('SEQN', 'RIDAGEYR', 'RIAGENDR', 'RIDRETH1', 'DMDMARTL', 'INDFMPIR')
+demo_col <- c('SEQN', 'RIDAGEYR', 'RIAGENDR', 'RIDRETH1', 'DMDMARTL', 'INDFMPIR', 'DMDEDUC2', 'FIALANG')
 
 reduce_DEMdata2005 <- DEMdata2005[,demo_col]
 reduce_DEMdata2007 <- DEMdata2007[,demo_col]
@@ -119,17 +124,27 @@ demo2005_2015 <- do.call(rbind, list(reduce_DEMdata2005, reduce_DEMdata2007,
                             reduce_DEMdata2009, reduce_DEMdata2011,
                             reduce_DEMdata2013, reduce_DEMdata2015))
 
-names(demo2005_2015) <- c('id', 'age','gender','race', 'marital_status', 'Family PIR')
+names(demo2005_2015) <- c('id', 'age','gender','race', 'marital_status', 'family_PIR',
+                          'education_level_adults', 'language')
+```
+
+
+```{r}
+demo_col <- c('SEQN', 'RIDAGEYR', 'RIAGENDR', 'RIDRETH1', 'DMDMARTZ', 'INDFMPIR', 'DMDEDUC2', 'FIALANG')
+
+reduce_DEMdata2017 <- DEMdata2017[,demo_col]
+names(reduce_DEMdata2017) <- c('id', 'age','gender','race', 'marital_status', 
+                               'family_PIR','education_level_adults', 'language')
 ```
 
 ```{r}
-demo_col <- c('SEQN', 'RIDAGEYR', 'RIAGENDR', 'RIDRETH1', 'DMDMARTZ', 'INDFMPIR')
-reduce_DEMdata2017 <- DEMdata2017[,demo_col]
-names(reduce_DEMdata2017) <- c('id', 'age','gender','race', 'marital_status', 'Family PIR')
-
 demo <- do.call(rbind, list(demo2005_2015, reduce_DEMdata2017))
-demo <- demo[!(demo$marital_status == 77 | demo$marital_status == 99),]
-demo <- na.omit(demo)
+
+demo <- demo %>% mutate(marital_status = na_if(marital_status, 77))
+demo <- demo %>% mutate(marital_status = na_if(marital_status, 99))
+demo <- demo %>% mutate(education_level_adults = na_if(education_level_adults, 77))
+demo <- demo %>% mutate(education_level_adults = na_if(education_level_adults, 77))
+
 head(demo)
 ```
 
@@ -176,7 +191,8 @@ sleep2005_2013 <- do.call(rbind, list(reduce_SLPdata2005, reduce_SLPdata2007,
 
 names(sleep2005_2013) <- c('id', 'sleep_hours', 'trouble_sleeping_history')
 
-sleep2005_2013 <- sleep2005_2013[!(sleep2005_2013$sleep_hours == 77 | sleep2005_2013$sleep_hours == 99),]
+sleep2005_2013 <- sleep2005_2013 %>% mutate(sleep_hours = na_if(sleep_hours, 77))
+sleep2005_2013 <- sleep2005_2013 %>% mutate(sleep_hours = na_if(sleep_hours, 99))
 ```
 
 ```{r}
@@ -186,13 +202,11 @@ names(reduce_SLPdata2015) <- c('id', 'sleep_hours', 'trouble_sleeping_history')
 
 reduce_SLPdata2017 <- SLPdata2017[,sleep_col]
 names(reduce_SLPdata2017) <- c('id', 'sleep_hours', 'trouble_sleeping_history')
+```
 
-
+```{r}
 sleep <- do.call(rbind, list(sleep2005_2013, reduce_SLPdata2015,
                              reduce_SLPdata2017))
-
-sleep <- na.omit(sleep)
-
 head(sleep)
 ```
 
@@ -234,7 +248,9 @@ reduce_ALCdata2011 <- ALCdata2011[,alcohol_col]
 reduce_ALCdata2013 <- ALCdata2013[,alcohol_col]
 reduce_ALCdata2015 <- ALCdata2015[,alcohol_col]
 reduce_ALCdata2017 <- ALCdata2017[,alcohol_col]
+```
 
+```{r}
 alcohol <- do.call(rbind, list(reduce_ALCdata2005, reduce_ALCdata2007,
                              reduce_ALCdata2009, reduce_ALCdata2011,
                              reduce_ALCdata2013, reduce_ALCdata2015,
@@ -242,9 +258,8 @@ alcohol <- do.call(rbind, list(reduce_ALCdata2005, reduce_ALCdata2007,
 
 names(alcohol) <- c('id', 'drinks_per_occasion')
 
-alcohol <- alcohol[!(alcohol$drinks_per_occasion == 777 | alcohol$drinks_per_occasion == 999),]
-
-alcohol <- na.omit(alcohol)
+alcohol <- alcohol %>% mutate(drinks_per_occasion = na_if(drinks_per_occasion, 777))
+alcohol <- alcohol %>% mutate(drinks_per_occasion = na_if(drinks_per_occasion, 999))
 
 head(alcohol)
 ```
@@ -278,7 +293,8 @@ SMKdata2017 <- foreign::read.xport(tf)
 ```
 
 ```{r}
-smoking_col <- c('SEQN', 'SMQ020')
+smoking_col <- c('SEQN', 'SMQ020', 'SMD030', 'SMQ040', 'SMD641', 'SMD650', 'SMD630',
+                 'SMQ670')
 
 reduce_SMKdata2005 <- SMKdata2005[,smoking_col]
 reduce_SMKdata2007 <- SMKdata2007[,smoking_col]
@@ -287,17 +303,25 @@ reduce_SMKdata2011 <- SMKdata2011[,smoking_col]
 reduce_SMKdata2013 <- SMKdata2013[,smoking_col]
 reduce_SMKdata2015 <- SMKdata2015[,smoking_col]
 reduce_SMKdata2017 <- SMKdata2017[,smoking_col]
+```
 
+```{r}
 smoking <- do.call(rbind, list(reduce_SMKdata2005, reduce_SMKdata2007,
                              reduce_SMKdata2009, reduce_SMKdata2011,
                              reduce_SMKdata2013, reduce_SMKdata2015,
                              reduce_SMKdata2017))
 
-names(smoking) <- c('id', 'smoked_at_least_100')
+names(smoking) <- c('id', 'SMQ020', 'SMD030', 'SMQ040', 'SMD641', 'SMD650', 'SMD630',
+                 'SMQ670')
 
-smoking <- smoking[!(smoking$smoked_at_least_100 == 7 | smoking$smoked_at_least_100 == 9),]
+smoking <- smoking %>% mutate(across(c(SMQ020, SMQ040, SMQ670), na_if, 7))
+smoking <- smoking %>% mutate(across(c(SMQ020, SMQ040, SMQ670), na_if, 9))
 
-smoking <- na.omit(smoking)
+smoking <- smoking %>% mutate(across(c(SMD030, SMD650), na_if, 777))
+smoking <- smoking %>% mutate(across(c(SMD030, SMD650), na_if, 999))
+
+smoking <- smoking %>% mutate(across(c(SMD641, SMD630), na_if, 77))
+smoking <- smoking %>% mutate(across(c(SMD641, SMD630), na_if, 99))
 
 head(smoking)
 ```
@@ -307,12 +331,76 @@ summary(smoking)
 dim(smoking)
 ```
 
+## Weight History
+```{r}
+WHdata2005 <- nhanes_load_data("WHQ_D", "2005-2006")
+WHdata2007 <- nhanes_load_data("WHQ_E", "2007-2008")
+WHdata2009 <- nhanes_load_data("WHQ_F", "2009-2010")
+WHdata2011 <- nhanes_load_data("WHQ_G", "2011-2012")
+WHdata2013 <- nhanes_load_data("WHQ_H", "2013-2014")
+
+download.file("https://wwwn.cdc.gov/nchs/nhanes/2015-2016/WHQ_I.xpt", 
+              temp <- tempfile(), 
+              mode="wb")
+
+WHdata2015 <- foreign::read.xport(temp)
+
+################################################################################
+
+download.file("https://wwwn.cdc.gov/nchs/nhanes/2017-2018/P_WHQ.xpt", 
+              tf <- tempfile(), 
+              mode="wb")
+
+WHdata2017 <- foreign::read.xport(tf)
+```
+
+```{r}
+weight_cols <- c("SEQN", "WHD010", "WHD020", "WHQ030", "WHQ040", "WHD050", "WHQ070", "WHD110", "WHD120", "WHD140", "WHQ150")
+
+reduce_WHdata2005 <- WHdata2005[,weight_cols]
+reduce_WHdata2007 <- WHdata2007[,weight_cols]
+reduce_WHdata2009 <- WHdata2009[,weight_cols]
+reduce_WHdata2011 <- WHdata2011[,weight_cols]
+reduce_WHdata2013 <- WHdata2013[,weight_cols]
+reduce_WHdata2015 <- WHdata2015[,weight_cols]
+reduce_WHdata2017 <- WHdata2017[,weight_cols]
+```
+
+```{r}
+weight <- do.call(rbind, list(reduce_WHdata2005, reduce_WHdata2007,
+                             reduce_WHdata2009, reduce_WHdata2011,
+                             reduce_WHdata2013, reduce_WHdata2015,
+                             reduce_WHdata2017))
+
+names(weight) <- c('id', "WHD010", "WHD020", "WHQ030", "WHQ040", "WHD050", "WHQ070", "WHD110", "WHD120", "WHD140", "WHQ150")
+
+weight <- weight %>% mutate(across(c(WHD010, WHD020, WHD050, WHD110, WHD120, WHD140), na_if, 7777))
+weight <- weight %>% mutate(across(c(WHD010, WHD020, WHD050, WHD110, WHD120, WHD140), na_if, 9999))
+
+weight <- weight %>% mutate(across(c(WHQ030, WHQ040, WHQ070), na_if, 7))
+weight <- weight %>% mutate(across(c(WHQ030, WHQ040, WHQ070), na_if, 9))
+
+weight <- weight %>% mutate(across(c(WHQ150), na_if, 77777))
+weight <- weight %>% mutate(across(c(WHQ150), na_if, 99999))
+
+head(weight)
+```
+
+```{r}
+summary(weight)
+dim(weight)
+```
+
 # Complete dataset
 ```{r}
-df_list <- list(demo, sleep, alcohol, smoking)      
-var_df <- Reduce(function(x, y) merge(x, y, all=TRUE), df_list)  
-var_df <- na.omit(var_df)
+df_list <- list(demo, sleep, alcohol, smoking, weight)      
+var_df <- Reduce(function(x, y) merge(x, y, all=TRUE), df_list) 
 head(var_df)
+```
+
+```{r}
+dim(var_df)
+summary(var_df)
 ```
 
 ```{r}
