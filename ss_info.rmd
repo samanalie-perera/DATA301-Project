@@ -1,0 +1,67 @@
+# Demographic
+## Columns
+cols = c("SEQN", "RIAGENDR", "RIDAGEYR", "RIDRETH3", "DMDEDUC3 ", "DMDHHSIZ", "DMDFMSIZ", "DMDHHSZA", "DMDHHSZB", "DMDHHSZE", "INDHHIN2", "INDFMIN2")
+
+## Missing Data Code 
+DMDBORN4 > 2 or .
+DMDEDUC3 > 15 or .
+DMDEDUC2 > 5 or .
+DMDMARTL > 6 or .
+FIALANG = .
+INDHHIN2 > 15 or .
+INDFMIN2 > 15 or .
+
+# Sleep Disorders
+## Columns
+cols = c("SEQN", "SLD012", "SLD013")
+
+## Missing Data Code
+SLD012 = .
+SLD013 = .
+SLQ030 > 3 or .
+SLQ040 > 3
+SLQ050 > 2
+SLQ120 > 4
+
+# Alcohol Use
+## COlumns
+cols = c("SEQN", ALQ111", "ALQ121", "ALQ130", "ALQ142", "ALQ280", "ALQ290", "ALQ151", "ALQ170")
+
+## Missing Data Code
+ALQ111 > 2
+ALQ121 > 10
+ALQ130 > 15
+ALQ142 > 10
+ALQ270 > 10
+ALQ280 > 10
+ALQ290 > 10
+ALQ151 > 2
+ALQ170 > 30
+
+# Smoking
+## Columns
+cols = c("SEQN", "SMQ020", "SMD030", "SMQ040", "SMQ078", "SMD641", "SMD650", "SMQ621", "SMD630", "SMQ661", "SMQ670", "SMQ848", "SMQ890", "SMQ895", "SMQ900", "SMQ905", "SMQ910", "SMQ915")
+
+## Missing Data Code
+SMQ020 > 2
+SMD030 > 777
+SMQ040 > 3
+SMQ078 > 7
+SMD641 > 30
+SMD650 > 95
+SMQ621 > 8
+SMD630 > 17
+SMQ661 > 10
+SMQ670 > 2
+SMQ848 > 777
+SMQ890 > 2
+SMQ895 > 30
+SMQ900 > 2
+SMQ905 > 30
+SMQ910 > 2
+SMQ915 > 30
+
+
+
+
+
