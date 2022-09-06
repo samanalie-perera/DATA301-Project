@@ -124,7 +124,7 @@ numeric_columns = c("age", "sleep_hours", "SMD641", "WHD010", "WHD020", "WHD050"
 
 par(mfcol=c(1, 3))
 for (i in numeric_columns) {
-        boxplot(df[,i], main = "Distribution of Variable", xlab = names(df[i]), ylab = "Variable Value")
+        boxplot(df[,i], main = paste("Distribution of ", names(df[i])),  xlab = names(df[i]), ylab = "Value")
 }
 ```
 All the actual numerical variables, have outliers except 'WHQ150'. The outliers in these variables will need to be checked to determine whether the observation is reasonable (in the context of the variable) or requires removal. Variables "sleep_hours", "WHD010" and "WHQ150" all appear to be symmetrical while the other variables appear to be skewed in some way.
