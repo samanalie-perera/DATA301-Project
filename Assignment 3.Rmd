@@ -11,7 +11,6 @@ library(dplyr)
 library(psych)
 ```
 
-
 # Background and Data
 
 ## Datasets
@@ -75,6 +74,13 @@ For generating the predictor variables, here is how we did it:
 
 - Finally, we will combine all the datasets by their id numbers and add the target output column as our final dataset. It's to be used in later building the model.
 
+## Steps to secure data
+The steps we can take to maintain integrity and confidentiality is making sure that only authorized users have access to the data: 
+To do that we can:
+- Make the github repo private that way only authorized people have access (group members)
+- Can password protect our data, with a password that is only distributed to the users who are authorized access
+
+
 # Ethics, Privacy and Security 
 
 ## Ethical considerations
@@ -89,6 +95,8 @@ Another concern with healthcare data is whether we can protect patients' informa
 
 ## Security concerns
 If the algorithm is made public via a data leak, then anyone could use it to find out which individuals are more likely to be depressed. This information could be used to target those individuals with ads or content that exploits their vulnerabilities. For example, an advertiser could show ads for antidepressant medications to someone who is predicted to be depressed. 
+
+To protect the integrity of the data we can make sure to only have information that is needed for this analysis, as well as not re-identifying the data (which is mentioned in Privacy concerns)
 
 # Exploratory Data Analysis
 ```{r}
@@ -159,7 +167,11 @@ This suggests that multicollinearity may be present, meaning some of these varia
 - Wrote the security concerns and ethical paragraphs
 - Wrote the interest statement
 
-
 ## Samanalie Perera, 300486075
+- Created data set
+
+- Background and Data: Completeness of the data set, Steps to integrate the data sets
+
+- Ethics, Privacy and Security: Steps to secure data
 
 
