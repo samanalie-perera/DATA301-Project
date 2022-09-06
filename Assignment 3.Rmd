@@ -1,71 +1,39 @@
 ---
 title: "Assignment 3"
-author: "Vivian, 300525329
-Saumya Sajwan, 300529034
-Samanalie Perera, 300486075"
+author: "Vivian, 300525329 Saumya Sajwan, 300529034 Samanalie Perera, 300486075"
 date: "2022-08-30"
-output: pdf_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 # Background and Data
 
 ## Datasets
-### Target Disease: Depression
-NHANES (National Health and Nutrition Examination Survey) 2005 - March 2020 Mental Health - Depression Screener datasets.
+NHANES (National Health and Nutrition Examination Survey) March 2005 - 2020 Mental Health - Depression Screener datasets.
 
-### Predictors
-#### Demographics
-NHANES (National Health and Nutrition Examination Survey) 2005 - March 2020 Demographic Variables & Sample Weights datasets.
-
-#### Sleep Disorders
-NHANES (National Health and Nutrition Examination Survey) 2005 - March 2020 Sleep Disorders datasets.
-
-#### Alcohol Use
-NHANES (National Health and Nutrition Examination Survey) 2005 - March 2020 Alcohol Use datasets.
-
-#### Smoking - Cigarette Use
-NHANES (National Health and Nutrition Examination Survey) 2005 - March 2020 Smoking - Cigarette Use datasets.
-
-#### Weight History
-NHANES (National Health and Nutrition Examination Survey) 2005 - March 2020 Weight History datasets.
-
-## Sources
+## Source
 https://wwwn.cdc.gov/nchs/nhanes/Search/DataPage.aspx?Component=Questionnaire
-
-https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Component=Demographics
 
 ## Interest
 We are interested in creating a machine learning model that finds and uses key features to identify individuals who are potentially suffering from depression. 
 
 ## Structure of the dataset
-There are 29 variables in our dataset: 20 categorical variables and 9 numerical variables. Therefore, we will use all variables excluding id and target output as our predictors; each is a question the respondents need to answer to help us identify whether a person has depression.
+There are 17 variables in our dataset: 3 categorical variables and 14 numerical variables. Therefore, we will use 10 variables; each is a question the respondents need to answer to help us identify whether a person has depression.
 
-## Completeness of the dataset
+## Complete dataset
 - The dataset consists of data from 2005 to March of 2020. We were going to add in later data from 2004-1999, however the datasets for them were completely different. They had more questions and didn't match the 2005-2020 questions, so we decided to not add them in. 
 
-- For classifying whether or not an individual has depression, we calculate the score from each variable in the depression dataset. Therefore, we deleted all the NA values for more accurate output. This meant that our dataset went down from 43,928 to 26,627. 17, 301 values were taken out.  
+- We also got rid of all the NA values. These values don't have any value to our target variable. This meant that our dataset went down from 43,928 to 26,627. 17, 301 values were taken out.  
 
-- For predictor datasets, we converted the "Refused" and "Don't know" categories to NA values for more accessible future data preprocessing.
 
 ## Steps to integrate the datasets
-We decided to use binary classification to predict our target disease, meaning 1 has depression and 0 is not. To get the target output column, here are the steps we did:
+To create the data set, the Mental health - Depression Screener data sets was combined into one:
 
-- Loaded the NHANES package on R. Only the datasets from 2005 to 2014 were part of the package. So for 2015 - March 2020, we had to read them using an R function (foreign::read.xport), which reads the data from a SAS XPORT file and returns it in a data frame. 
-
-- Added all the datasets together into one large dataset using rbind.
-
-- To find out the total score each individual had, we added each of the columns together and added them to a new column called Score.
-
-- We added another column for classifying whether or not an individual has depression. For that, we said that if the Score was 10 or higher, that person has depression. If not, they don't. We used this website for the score: https://bmcrheumatol.biomedcentral.com/articles/10.1186/s41927-021-00236-w#:~:text=Adults%20(%E2%89%A5%2018%20years)%20with,9%20(PHQ%2D9)
-
-For generating the predictor variables, here is how we did it:
-
-- First, using the same method we did for downloading the depression dataset. We decided to use the variables from Demographic Variables & Sample Weights, Sleep Disorders, Alcohol Use, Smoking - Cigarette Use and Weight History datasets.
-
-- Each dataset has different variables every year. So for each dataset, we only use the variables that appear every year and then combine them as one dataset.
-
-- Then we will look at the categorical variables. For example, the category "Refused" is 777 and "Don't know" is 999 in some datasets. We convert them to NA values, as the number doesn't have any meaning, which may affect our prediction accuracy in the future.
-
-- Finally, we will combine all the datasets by their id numbers and add the target output column as our final dataset. It's to be used in later building the model.
+- Loaded the NHANES package on R, only the datasets from 2005 to 2014 were part of the package so for 2015 - March 2020, we had to read them in using a R function (foreign::read.xport) where it reads the data from a SAS XPORT file and returns the data in a dataframe. 
+- Adding in more columns: filename, cycle, start year and end year, so the data from the newer datasets match the older ones.
+- Added all the datasets together into one large dataset using rbind
+- To find out the total score each individual had, we added each of the columns together and added them to a new column called Score
+- Adding in another column for classifying whether or not a individual has depression. For that we said that if Score was 10 or higher then that person has depression if not they don't. We used this website for the score: https://bmcrheumatol.biomedcentral.com/articles/10.1186/s41927-021-00236-w#:~:text=Adults%20(%E2%89%A5%2018%20years)%20with,9%20(PHQ%2D9)
 
 # Ethics, Privacy and Security 
 
@@ -73,49 +41,65 @@ For generating the predictor variables, here is how we did it:
 There are a number of ethical concerns that need to be considered when developing and deploying a machine learning algorithm that predicts if an individual is depressed. First, it is important to consider the potential impact of false positives and false negatives. If the algorithm incorrectly predicts that an individual is depressed, this could lead to them being unnecessarily treated or stigmatized. On the other hand, if the algorithm fails to predict that an individual is depressed, this could result in them not receiving the help they need. 
 
 ## Privacy concerns
-### Access and use
-Whether we got permission and notified every respondent before using their information is essential, especially under legislation in different states. Also, our model requires access to many respondents' data, and we need to prevent the data from being used in different ways over time.
-
-### Re-identification
-Another concern with healthcare data is whether we can protect patients' information. A lot of research shows that people can use different techniques to re-identify individuals in the data. But on the other hand, too much de-identification may diminish the clinical utility of the data, but too little de-identification may lead to a breach of privacy. (https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2826964/)
 
 ## Security concerns
 If the algorithm is made public via a data leak, then anyone could use it to find out which individuals are more likely to be depressed. This information could be used to target those individuals with ads or content that exploits their vulnerabilities. For example, an advertiser could show ads for antidepressant medications to someone who is predicted to be depressed. 
 
-## Steps to secure data
-The steps we can take to maintain integrity and confidentiality is making sure that only authorised users have access to the data:
-To do that we can:
-- Make the github repo private that way only authorised people have access (group members)
-- Can password protect our data, with a password that is only distributed to the users who are authorised access
-- To protect the integrity of the data we can make sure to only have information that is needed for this analysis, as well as not re-identifying the data (which is mentioned in Privacy concerns)
-
-
-
 # Exploratory Data Analysis
 ```{r}
 df = read.csv("project_data.csv")
-#df.drop(c("id", "X")
+target = "result"
 
-dim(df)
+## Dropping redundant features
+df = subset(df, select = -c(X, id))
+
 ```
-There are 26,627 rows and 30 features in our data. 
+
+## Number of Features & Observations
+```{r}
+dim(df)
+
+sum(unlist(lapply(df, is.numeric)))
+```
+There are 26627 observations and 28 features in our dataset. Out of those 28 features, 27 are explanatory while 1 is our target variable. 
+Due to the way the NHANES data was encoded, all 28 features are currently considered to be numeric by R even though some of these variables are actually categorical. This will need to be changed before we start our modeling.
+
+The actual numerical variables are; "sleep_hours", "drinks_per_occasion", "SMD030", "SMD641", "SMD650", "SMD630", "WHD010", "WHD020", "WHD050", "WHD110", "WHD120", "WHD140", "WHQ150".
+
+
+```{r}
+summary(df)
+
+numeric_columns = c("sleep_hours", "drinks_per_occasion", "SMD030", "SMD641", "SMD650", "SMD630", "WHD010", "WHD020", "WHD050", "WHD110", "WHD120", "WHD140", "WHQ150")
+```
+All the variables apart from result, age, gender, and race have missing values. Imputation of some form will be used to deal with this before we start modelling.
+
+```{r}
+par(mfcol=c(1,2))
+for (i in numeric_columns) {
+        boxplot(df[,i], main=names(df[i]), type="l")
+}
+```
+All the actual numerical variables, have outliers except 'WHQ150'. The outliers in these variables will need to be checked to determine whether the observation is reasonable (in the context of the variable) or requires removal. Variables "sleep_hours", "WHD010" and "WHQ150" all appear to be symmetrical while the other variables appear to be skewed in some way.
+
+```{r}
+corr_variables = c("sleep_hours", "drinks_per_occasion", "WHD010", "WHD020", "WHD050", "WHD110", "WHD120", "WHD140", "WHQ150")
+
+df[, corr_variables]%>% 
+  pairs.panels(method = "spearman", # correlation method
+             hist.col = "lightgreen", # histogram color
+             density = TRUE,  # show density plots
+             ellipses = FALSE # do not show correlation ellipses
+             )
+```
+
+
 
 # Individual Contributions
 ## Vivian, 300525329
-- Finalised Dataset
-
-- Background and Data: Datasets, Sources, Structure of the dataset, Completeness of the dataset, Steps to integrate the datasets.
-
-- Ethics, Privacy and Security: Privacy concerns.
 
 ## Saumya Sajwan, 300529034
 
 ## Samanalie Perera, 300486075
-- Created dataset
-
-- Background and Data: Completeness of the dataset, Steps to integrate the datasets
-
-- Ethics, Privacy and Security: Steps to secure data
-
 
 
