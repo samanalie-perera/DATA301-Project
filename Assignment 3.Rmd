@@ -6,6 +6,12 @@ output:
   pdf_document: default
   html_document: default
 ---
+```{r}
+library(dplyr)
+library(psych)
+```
+
+
 # Background and Data
 
 ## Datasets
@@ -103,35 +109,41 @@ sum(unlist(lapply(df, is.numeric)))
 There are 26627 observations and 28 features in our dataset. Out of those 28 features, 27 are explanatory while 1 is our target variable. 
 Due to the way the NHANES data was encoded, all 28 features are currently considered to be numeric by R even though some of these variables are actually categorical. This will need to be changed before we start our modeling.
 
-The actual numerical variables are; "sleep_hours", "drinks_per_occasion", "SMD030", "SMD641", "SMD650", "SMD630", "WHD010", "WHD020", "WHD050", "WHD110", "WHD120", "WHD140", "WHQ150".
+The actual numerical variables are; "age", "sleep_hours", "SMD641", "WHD010", "WHD020", "WHD050", "WHD110", "WHD120", "WHD140"
 
-
+## Summary of all variables
 ```{r}
 summary(df)
-
-numeric_columns = c("sleep_hours", "drinks_per_occasion", "SMD030", "SMD641", "SMD650", "SMD630", "WHD010", "WHD020", "WHD050", "WHD110", "WHD120", "WHD140", "WHQ150")
 ```
 All the variables apart from result, age, gender, and race have missing values. Imputation of some form will be used to deal with this before we start modelling.
 
+## Distribution of Numerical Variables
 ```{r}
-par(mfcol=c(1,2))
+numeric_columns = c("age", "sleep_hours", "SMD641", "WHD010", "WHD020", "WHD050", "WHD110", "WHD120", "WHD140")
+
+
+par(mfcol=c(1, 3))
 for (i in numeric_columns) {
-        boxplot(df[,i], main=names(df[i]), type="l")
+        boxplot(df[,i], main = "Distribution of Variable", xlab = names(df[i]), ylab = "Variable Value")
 }
 ```
 All the actual numerical variables, have outliers except 'WHQ150'. The outliers in these variables will need to be checked to determine whether the observation is reasonable (in the context of the variable) or requires removal. Variables "sleep_hours", "WHD010" and "WHQ150" all appear to be symmetrical while the other variables appear to be skewed in some way.
 
+## Checking for Multi-Collinearity of Numerical Variables
 ```{r}
-corr_variables = c("sleep_hours", "drinks_per_occasion", "WHD010", "WHD020", "WHD050", "WHD110", "WHD120", "WHD140", "WHQ150")
-
-df[, corr_variables]%>% 
+df[, numeric_columns]%>% 
   pairs.panels(method = "spearman", # correlation method
              hist.col = "lightgreen", # histogram color
              density = TRUE,  # show density plots
              ellipses = FALSE # do not show correlation ellipses
              )
 ```
+From this plot we can see that the numerical variable "sleep hours" is the only variable that appears to be approximately normally distributed. All the other numeric variables appear do not have a bell-shape or are skewed in some way. 
 
+There also appears to be strong linear relationships between the following paris of variables; "WHD020" and "WHD050", "WHD050" and "WHD110"
+, "WHD020" and "WHD140", "WHD050" and "WHD140", "WHD050" and "WHD140", "WHD110" and "WHD140" as they all have pearson coefficients greater than 0.8. This is expected as all of these variables are related to the individuals weight and/or height, which are known to have a linear relationship between them. 
+
+This suggests that multicollinearity may be present, meaning some of these variables may need to be removed before modelling, depending on the type of model being created. 
 
 
 # Individual Contributions
