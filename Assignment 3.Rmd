@@ -97,6 +97,8 @@ There are 13471 rows and 12 features in our data. One of
 ## Vivian, 300525329
 - Background and Data: Datasets, Sources, Structure of the dataset, Completeness of the dataset, Steps to integrate the datasets.
 
+- Ethics, Privacy and Security: Privacy concerns.
+
 ## Saumya Sajwan, 300529034
 
 ## Samanalie Perera, 300486075
