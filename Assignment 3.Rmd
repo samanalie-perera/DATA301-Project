@@ -136,6 +136,11 @@ df[, corr_variables]%>%
 
 # Individual Contributions
 ## Vivian, 300525329
+- Genearing data sets.
+
+- Background and Data: Datasets, Sources, Structure of the dataset, Completeness of the dataset, Steps to integrate the datasets.
+
+- Ethics, Privacy and Security: Privacy concerns.
 
 ## Saumya Sajwan, 300529034
 
