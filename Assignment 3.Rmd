@@ -155,6 +155,10 @@ This suggests that multicollinearity may be present, meaning some of these varia
 - Ethics, Privacy and Security: Privacy concerns.
 
 ## Saumya Sajwan, 300529034
+- Did EDA section code and analysis
+- Wrote the security concerns and ethical paragraphs
+- Wrote the interest statement
+
 
 ## Samanalie Perera, 300486075
 
