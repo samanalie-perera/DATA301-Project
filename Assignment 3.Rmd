@@ -75,6 +75,11 @@ For generating the predictor variables, here is how we did it:
 There are a number of ethical concerns that need to be considered when developing and deploying a machine learning algorithm that predicts if an individual is depressed. First, it is important to consider the potential impact of false positives and false negatives. If the algorithm incorrectly predicts that an individual is depressed, this could lead to them being unnecessarily treated or stigmatized. On the other hand, if the algorithm fails to predict that an individual is depressed, this could result in them not receiving the help they need. 
 
 ## Privacy concerns
+### Access and use
+Whether we got permission and notified every respondent before using their information is essential, especially under legislation in different states. Also, our model requires access to many respondents' data, and we need to prevent the data from being used in different ways over time.
+
+### Re-identification
+Another concern with healthcare data is whether we can protect patients' information. A lot of research shows that people can use different techniques to re-identify individuals in the data. But on the other hand, too much de-identification may diminish the clinical utility of the data, but too little de-identification may lead to a breach of privacy. (https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2826964/)
 
 ## Security concerns
 If the algorithm is made public via a data leak, then anyone could use it to find out which individuals are more likely to be depressed. This information could be used to target those individuals with ads or content that exploits their vulnerabilities. For example, an advertiser could show ads for antidepressant medications to someone who is predicted to be depressed. 
